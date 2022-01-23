@@ -1,2 +1,2 @@
-from .trans_mesh import transform_mesh
-from .simplify_mesh import simplify_mesh
+from .transform import transform_mesh
+from .simplify import simplify_mesh

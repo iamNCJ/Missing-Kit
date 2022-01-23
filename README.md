@@ -2,4 +2,5 @@
  The missing tool kit for CV&CG researchers
 
 ## Core ideas
- - **Unified Numeric Interface**: all data interface is `np.ndarray`
+ - **Replacement of Code Snippets**: common operations with easy interfaces
+ - **Unified Numeric Interface**: all data interfaces are `np.ndarray`

@@ -1,2 +1,2 @@
-from .alignment_file import load_trans
-from .mesh_file import load_mesh, save_mesh
+from .alignment import load_trans
+from .mesh import load_mesh, save_mesh

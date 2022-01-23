@@ -4,8 +4,8 @@ import numpy as np
 
 def load_mesh(filename, load_all: bool = False):
     """
-    Load mesh with Open3D
-    :param filename: mesh file
+    Load mesh_process with Open3D
+    :param filename: mesh_process file
     :param load_all: whether to load colors and normals
     :return:
         - points: `np.ndarray` (n, 3)
@@ -25,8 +25,8 @@ def load_mesh(filename, load_all: bool = False):
 def save_mesh(filename, points: np.ndarray, colors: np.ndarray = None, normals: np.ndarray = None,
               use_float32: bool = True):
     """
-    Save mesh to file with Open3D
-    :param filename: mesh file
+    Save mesh_process to file with Open3D
+    :param filename: mesh_process file
     :param points: `np.ndarray` (n, 3)
     :param colors: `np.ndarray` (n, 3), set None if colors not available
     :param normals: `np.ndarray` (n, 3), set None if normals not available

@@ -4,7 +4,7 @@ import pymeshlab
 
 def simplify_mesh(points: np.ndarray, sample_num: int = 1000):
     """
-    Simplify mesh with meshlab
+    Simplify mesh_process with meshlab
     :param points: `np.ndarray` (n, 3)
     :param sample_num: number of points to leave after simplification
     :return: `np.ndarray` (n, 3)

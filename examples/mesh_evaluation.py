@@ -1,6 +1,6 @@
-from missing_kit.fitting.cpd import reg_rigid_3d
+from missing_kit.math.fitting.cpd import reg_rigid_3d
 from missing_kit.io import load_mesh, save_mesh, load_trans
-from missing_kit.mesh import transform_mesh, simplify_mesh
+from missing_kit.mesh_process import transform_mesh, simplify_mesh
 
 
 def main_pipeline(mesh_file_source, mesh_file_target, aln_file, output_mesh_file, cpd_sample_num: int = 1000):
@@ -11,7 +11,7 @@ def main_pipeline(mesh_file_source, mesh_file_target, aln_file, output_mesh_file
     trans = trans_1 @ trans_2  # just to eliminate unit matrix
     transformed_source_points = transform_mesh(source_points, trans)
 
-    # stage 2, simplify mesh
+    # stage 2, simplify mesh_process
     simplified_source_points = simplify_mesh(transformed_source_points, sample_num=cpd_sample_num)
     simplified_target_points = simplify_mesh(target_points, sample_num=cpd_sample_num)
 

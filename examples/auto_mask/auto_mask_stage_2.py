@@ -6,7 +6,7 @@ import open3d as o3d
 
 from missing_kit.io import create_colmap_database, read_colmap_model, load_mesh, load_trans
 from missing_kit.math.transform import matrix_from_r_t, apply_matrix, matrix_rotate_axis_angle
-from missing_kit.math.fitting import fit_cylinder
+from missing_kit.math.fitting import fit_cylinder, reg_rigid_3d
 from missing_kit.mesh_process import simplify_mesh, transform_mesh
 from missing_kit.render import soft_render
 from missing_kit.shell import colmap
@@ -90,9 +90,12 @@ if __name__ == '__main__':
     #         tx, ty, tz = M_cam_new[0:3, 3]
     #         f.write(f'{id_map[f"{(360 - j) % 360}.png"]} {qw} {qx} {qy} {qz} {tx} {ty} {tz} 1 {(360 - j) % 360}.png\n\n')
 
-    object_points = load_mesh(GROUNDTRUTH_FILE_PATH)
+    gt_points = load_mesh(GROUNDTRUTH_FILE_PATH)
     trans = load_trans(ALN_FILE_PATH)
-    object_points = transform_mesh(object_points, trans)
+    gt_points = transform_mesh(gt_points, trans)
+    obj_points = load_mesh(OBJECT_FILE_PATH)
+    finetuned_trans = reg_rigid_3d(obj_points, gt_points)
+    gt_points = transform_mesh(gt_points, finetuned_trans)
     image_dimensions = np.array((H, W), dtype=np.float64)
     focal_lengths = np.array((CAM_PARAMS[0], CAM_PARAMS[1]), dtype=np.float64)
     principal_point = np.array((CAM_PARAMS[2], CAM_PARAMS[3]), dtype=np.float64)
@@ -100,7 +103,7 @@ if __name__ == '__main__':
     for i in tqdm(range(0, 360)):
         M_Rotate_inv = np.linalg.inv(matrix_rotate_axis_angle(w_fit, C_fit, i * np.pi / 180.))
         M_cam_new = M_cam_init @ M_Rotate_inv
-        trans_points = apply_matrix(M_cam_new, object_points)
+        trans_points = apply_matrix(M_cam_new, gt_points)
         img = (soft_render(trans_points, focal_lengths, principal_point, image_dimensions) * 255).astype(np.uint8)
         img = cv2.dilate(img, kernel=np.ones((10, 10), 'uint8'))
         img = cv2.erode(img, kernel=np.ones((10, 10), 'uint8'))

@@ -94,7 +94,7 @@ if __name__ == '__main__':
     trans = load_trans(ALN_FILE_PATH)
     gt_points = transform_mesh(gt_points, trans)
     obj_points = load_mesh(OBJECT_FILE_PATH)
-    finetuned_trans = reg_rigid_3d(obj_points, gt_points)
+    finetuned_trans = reg_rigid_3d(simplify_mesh(obj_points), simplify_mesh(gt_points))
     gt_points = transform_mesh(gt_points, finetuned_trans)
     image_dimensions = np.array((H, W), dtype=np.float64)
     focal_lengths = np.array((CAM_PARAMS[0], CAM_PARAMS[1]), dtype=np.float64)

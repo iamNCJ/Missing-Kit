@@ -29,8 +29,8 @@ def get_poisson_mesh(base_path, database_name, image_path, camera_params, output
 
 
 if __name__ == '__main__':
-    OBJECT_NAME = 'big_white'
-    BASE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_main_results/{OBJECT_NAME}'
+    OBJECT_NAME = 'egypt'
+    BASE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_lambda_comp/{OBJECT_NAME}'
     # GROUNDTRUTH_FILE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/gts/{OBJECT_NAME}.ply'
     CAM_PARAMS = [2373.046104729776, 2375.5106693944517, 668.8785376738697, 550.609404815664]
     W, H = 1332, 1152
@@ -107,4 +107,4 @@ if __name__ == '__main__':
         img = (soft_render(trans_points, focal_lengths, principal_point, image_dimensions) * 255).astype(np.uint8)
         img = cv2.dilate(img, kernel=np.ones((10, 10), 'uint8'))
         img = cv2.erode(img, kernel=np.ones((10, 10), 'uint8'))
-        cv2.imwrite(f'{BASE_PATH}/{i}/mask_obj_only2.png', img)
+        cv2.imwrite(f'{BASE_PATH}/{i}/mask_obj_only22.png', img)

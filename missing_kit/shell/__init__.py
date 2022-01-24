@@ -1,1 +1,1 @@
-from sh import sh
+from .sh import sh

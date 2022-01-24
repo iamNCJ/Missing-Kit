@@ -1,5 +1,5 @@
 from missing_kit.io import create_colmap_database
-from missing_kit.shell import colmap
+from missing_kit.shell import colmap, mkdir, cp
 
 
 def get_poisson_mesh(base_path, database_name, image_path, camera_params, output_poisson):
@@ -19,16 +19,28 @@ def get_poisson_mesh(base_path, database_name, image_path, camera_params, output
 
 
 if __name__ == '__main__':
-    BASE_PATH = '/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_19_5models/amiibo/test_new_script'
+    BASE_PATH = '/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_lambda_comp/egypt'
     DB_NAME = 'database.db'
-    IMAGE_PATH = f'{BASE_PATH}/30views'
-    CAMERA_PARAMS = '2373.046104729776,2375.5106693944517,668.8785376738697,550.609404815664,0.0,0.0,0.0,0.0'
-    POISSON_FILE_PATH = f'{BASE_PATH}/mesh_poisson.ply'
+    FULLON_IMAGE_PATH = f'{BASE_PATH}/fullon'
 
+    AUTO_MASK_BASE_PATH = f'{BASE_PATH}/auto_mask'
+    PICKED_IMAGE_PATH = f'{AUTO_MASK_BASE_PATH}/selected_views'
+    CAMERA_PARAMS = '2373.046104729776,2375.5106693944517,668.8785376738697,550.609404815664,0.0,0.0,0.0,0.0'
+    POISSON_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/mesh_poisson.ply'
+
+    print('[INFO] prepare images')
+    mkdir(AUTO_MASK_BASE_PATH)
+    mkdir(PICKED_IMAGE_PATH)
+    for i in range(0, 360, 360 // 24):
+        cp(f'{FULLON_IMAGE_PATH}/{i}.png', f'{PICKED_IMAGE_PATH}/{i}.png')
+
+    print('[INFO] build poisson')
     get_poisson_mesh(
-        base_path=BASE_PATH,
+        base_path=AUTO_MASK_BASE_PATH,
         database_name=DB_NAME,
-        image_path=IMAGE_PATH,
+        image_path=PICKED_IMAGE_PATH,
         camera_params=CAMERA_PARAMS,
         output_poisson=POISSON_FILE_PATH
     )
+
+    print(f'[INFO] poisson generation done, please edit {POISSON_FILE_PATH} and launch stage 2 afterwards.')

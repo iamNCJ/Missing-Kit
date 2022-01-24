@@ -1,1 +1,1 @@
-from .sh import sh, mkdir
+from .sh import sh, mkdir, cp

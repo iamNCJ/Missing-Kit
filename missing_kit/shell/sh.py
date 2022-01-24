@@ -4,6 +4,7 @@ Inspired by `zxpy`(https://github.com/tusharsadhwani/zxpy), but no need to use `
 import codecs
 import contextlib
 import os
+import shutil
 import subprocess
 from typing import Generator, Tuple, IO
 
@@ -53,8 +54,15 @@ def sh(command: str, echo: bool = True) -> Tuple[str, int]:
 
 
 def mkdir(path):
+    print(f'mkdir {path}')
     if not os.path.exists(path):
         os.mkdir(path)
+        print(f'done')
+
+
+def cp(src, dst):
+    print(f'cp {src} {dst}')
+    shutil.copy(src, dst)
 
 
 if __name__ == '__main__':

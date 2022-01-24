@@ -29,8 +29,8 @@ def get_poisson_mesh(base_path, database_name, image_path, camera_params, output
 
 
 if __name__ == '__main__':
-    OBJECT_NAME = 'egypt'
-    BASE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_lambda_comp/{OBJECT_NAME}'
+    OBJECT_NAME = 'egypt_cat'
+    BASE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_main_results/{OBJECT_NAME}'
     # GROUNDTRUTH_FILE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/gts/{OBJECT_NAME}.ply'
     CAM_PARAMS = [2373.046104729776, 2375.5106693944517, 668.8785376738697, 550.609404815664]
     W, H = 1332, 1152
@@ -60,7 +60,7 @@ if __name__ == '__main__':
         cam_poses.append(cam_pos.T)
 
     turn_table_points = load_mesh(TURNTABLE_FILE_PATH)
-    turn_table_points = simplify_mesh(turn_table_points)
+    turn_table_points = simplify_mesh(turn_table_points, sample_num=10000)
     w_fit, C_fit, r_fit, fit_err = fit_cylinder(turn_table_points)
 
     cam_poses.append(C_fit)
@@ -96,15 +96,15 @@ if __name__ == '__main__':
     obj_points = load_mesh(OBJECT_FILE_PATH)
     # finetuned_trans = reg_rigid_3d(simplify_mesh(obj_points), simplify_mesh(gt_points))
     # gt_points = transform_mesh(gt_points, finetuned_trans)
-    # image_dimensions = np.array((H, W), dtype=np.float64)
-    # focal_lengths = np.array((CAM_PARAMS[0], CAM_PARAMS[1]), dtype=np.float64)
-    # principal_point = np.array((CAM_PARAMS[2], CAM_PARAMS[3]), dtype=np.float64)
-    image_width = 1332
-    image_height = 1152
-    image_dimensions = np.array((image_height, image_width), dtype=np.float64)
-
-    focal_lengths = np.array((2373.046104729776, 2375.5106693944517), dtype=np.float64)
-    principal_point = np.array((668.8785376738697, 550.609404815664), dtype=np.float64)
+    image_dimensions = np.array((H, W), dtype=np.float64)
+    focal_lengths = np.array((CAM_PARAMS[0], CAM_PARAMS[1]), dtype=np.float64)
+    principal_point = np.array((CAM_PARAMS[2], CAM_PARAMS[3]), dtype=np.float64)
+    # image_width = 1332
+    # image_height = 1152
+    # image_dimensions = np.array((image_height, image_width), dtype=np.float64)
+    #
+    # focal_lengths = np.array((2373.046104729776, 2375.5106693944517), dtype=np.float64)
+    # principal_point = np.array((668.8785376738697, 550.609404815664), dtype=np.float64)
 
     for i in tqdm(range(0, 360)):
         M_Rotate_inv = np.linalg.inv(matrix_rotate_axis_angle(w_fit, C_fit, i * np.pi / 180.))

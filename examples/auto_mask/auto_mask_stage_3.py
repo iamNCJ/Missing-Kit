@@ -1,5 +1,5 @@
 from missing_kit.io import create_colmap_database, get_images_from_colmap_db
-from missing_kit.shell import colmap
+from missing_kit.shell import colmap, mkdir
 
 if __name__ == '__main__':
     OBJECT_NAME = 'egypt'
@@ -8,20 +8,15 @@ if __name__ == '__main__':
 
     DB_NAME = 'database.db'
     NEW_IMAGE_PATH = f'{BASE_PATH}/test_mask'
-    AUTO_MASK_BASE_PATH = f'{BASE_PATH}/auto_mask'
-    PICKED_IMAGE_PATH = f'{AUTO_MASK_BASE_PATH}/selected_views'
-    OBJECT_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/object.ply'
-    TURNTABLE_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/turntable.ply'
-    ALN_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/alignment.aln'
-    DENSE_MODEL = f'{AUTO_MASK_BASE_PATH}/sparse/0'
+    SFM_PATH = f'{BASE_PATH}/sfm_test'
+    DB_PATH = f'{SFM_PATH}/{DB_NAME}'
 
-    database_name = f'{BASE_PATH}/{DB_NAME}'
+    mkdir(SFM_PATH)
+    create_colmap_database(DB_PATH)
+    colmap.feature_extractor(DB_PATH, NEW_IMAGE_PATH, CAMERA_PARAMS)
+    colmap.exhaustive_matcher(DB_PATH)
 
-    create_colmap_database(database_name)
-    colmap.feature_extractor(database_name, NEW_IMAGE_PATH, CAMERA_PARAMS)
-    colmap.exhaustive_matcher(database_name)
-
-    images = get_images_from_colmap_db(database_name)
+    images = get_images_from_colmap_db(DB_PATH)
     id_map = {}
     for image in images:
         print(image)

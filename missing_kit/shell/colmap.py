@@ -1,4 +1,4 @@
-from missing_kit.shell import sh
+from missing_kit.shell import sh, mkdir
 
 
 def feature_extractor(database_file: str, image_path: str, camera_params: str):
@@ -44,6 +44,7 @@ def reconstruction_mapper(database_file, image_path, output_path):
     :param image_path:
     :param output_path:
     """
+    mkdir(output_path)
     stdout, stderr, exit_code = sh('colmap mapper '
                                    f'--database_path {database_file} '
                                    f'--image_path {image_path} '

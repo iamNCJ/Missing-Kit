@@ -16,6 +16,8 @@ def feature_extractor(database_file: str, image_path: str, camera_params: str):
                                    '--ImageReader.single_camera 1 '
                                    f'--ImageReader.camera_params {camera_params}')
     if exit_code != 0:
+        print(stdout)
+        print(stderr)
         raise RuntimeError('COLMAP Feature Extractor run failed!')
 
 

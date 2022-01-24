@@ -137,3 +137,22 @@ def poisson_mesher(input_file, output_file, trim: float = 5.):
     if exit_code != 0:
         print(output)
         raise RuntimeError('COLMAP Poisson Surface Reconstruction run failed!')
+
+
+def point_triangulator(database_file, image_path, input_model, output_model):
+    """
+    Wrapper of COLMAP Point Triangulator
+    :param: database_file
+    :param: image_path
+    :param: input_model
+    :param: output_model
+    """
+    output, exit_code = sh('colmap point_triangulator '
+                           f'--database_path {database_file} '
+                           f'--image_path {image_path} '
+                           f'--input_path {input_model} '
+                           f'--output_path {output_model}')
+
+    if exit_code != 0:
+        print(output)
+        raise RuntimeError('COLMAP Poisson Surface Reconstruction run failed!')

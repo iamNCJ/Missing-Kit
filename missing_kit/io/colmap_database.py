@@ -260,4 +260,6 @@ def get_images_from_colmap_db(filename):
     :return: List of image infos
     """
     db = COLMAPDatabase.connect(filename)
-    return db.get_images()
+    res = db.get_images()
+    db.close()
+    return res

@@ -25,7 +25,7 @@ if __name__ == '__main__':
     colmap.feature_extractor(DB_PATH, NEW_IMAGE_PATH, CAMERA_PARAMS)
     colmap.exhaustive_matcher(DB_PATH)
 
-    images = get_images_from_colmap_db('../data/database.db')
+    images = get_images_from_colmap_db(DB_PATH)
     id_map = {}
     for image in images:
         image_id = image[0]

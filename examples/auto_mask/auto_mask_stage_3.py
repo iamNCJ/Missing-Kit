@@ -1,18 +1,9 @@
-import cv2
-import numpy as np
-from scipy.spatial.transform import Rotation as R
-from tqdm import tqdm
-import open3d as o3d
-
-from missing_kit.io import read_colmap_model, load_mesh, create_colmap_database, get_images_from_colmap_db
-from missing_kit.math.transform import matrix_from_r_t, apply_matrix, matrix_rotate_axis_angle
-from missing_kit.math.fitting import fit_cylinder
-from missing_kit.mesh_process import simplify_mesh, transform_mesh
+from missing_kit.io import create_colmap_database, get_images_from_colmap_db
 from missing_kit.shell import colmap
 
 if __name__ == '__main__':
-    OBJECT_NAME = 'egypt_cat'
-    BASE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_main_results/{OBJECT_NAME}'
+    OBJECT_NAME = 'egypt'
+    BASE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_lambda_comp/{OBJECT_NAME}'
     CAMERA_PARAMS = '2373.046104729776,2375.5106693944517,668.8785376738697,550.609404815664,0.0,0.0,0.0,0.0'
 
     DB_NAME = 'database.db'

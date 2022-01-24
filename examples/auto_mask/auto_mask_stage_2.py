@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 from tqdm import tqdm
-import open3d as o3d
 
 from missing_kit.io import create_colmap_database, read_colmap_model, load_mesh, load_trans
 from missing_kit.math.transform import matrix_from_r_t, apply_matrix, matrix_rotate_axis_angle
@@ -29,7 +28,7 @@ def get_poisson_mesh(base_path, database_name, image_path, camera_params, output
 
 
 if __name__ == '__main__':
-    OBJECT_NAME = 'egypt_cat'
+    OBJECT_NAME = 'big_white'
     BASE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_main_results/{OBJECT_NAME}'
     GROUNDTRUTH_FILE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/gts/{OBJECT_NAME}.ply'
     CAM_PARAMS = [2373.046104729776, 2375.5106693944517, 668.8785376738697, 550.609404815664]
@@ -63,15 +62,14 @@ if __name__ == '__main__':
     turn_table_points = simplify_mesh(turn_table_points)
     w_fit, C_fit, r_fit, fit_err = fit_cylinder(turn_table_points)
 
-    cam_poses.append(C_fit)
-    cam_poses.append(C_fit * r_fit + w_fit)
-    pcd = o3d.geometry.PointCloud()
-    pcd.points = o3d.utility.Vector3dVector(cam_poses)
-    o3d.io.write_point_cloud(f"{AUTO_MASK_BASE_PATH}/cam.ply", pcd)
+    # cam_poses.append(C_fit)
+    # cam_poses.append(C_fit * r_fit + w_fit)
+    # pcd = o3d.geometry.PointCloud()
+    # pcd.points = o3d.utility.Vector3dVector(cam_poses)
+    # o3d.io.write_point_cloud(f"{AUTO_MASK_BASE_PATH}/cam.ply", pcd)
 
-    vec_point_to_center = turn_table_points[0] - C_fit
-    cross_product = np.cross(vec_point_to_center, w_fit)
-    print(cross_product)
+    if np.dot(cam_poses[0] - C_fit, w_fit) < 0:
+        w_fit *= -1
 
     # id_map = {}
     # with open('../data/images.json', 'r') as f:

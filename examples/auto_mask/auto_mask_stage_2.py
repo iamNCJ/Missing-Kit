@@ -68,7 +68,7 @@ if __name__ == '__main__':
     # pcd.points = o3d.utility.Vector3dVector(cam_poses)
     # o3d.io.write_point_cloud(f"{AUTO_MASK_BASE_PATH}/cam.ply", pcd)
 
-    if np.dot(cam_poses[0] - C_fit, w_fit) < 0:
+    if np.dot(cam_poses[0].reshape((3,)) - C_fit, w_fit) < 0:
         w_fit *= -1
 
     # id_map = {}

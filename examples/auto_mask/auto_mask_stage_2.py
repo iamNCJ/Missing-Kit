@@ -1,12 +1,12 @@
 import cv2
 import numpy as np
-from cylinder_fitting import fit
 from scipy.spatial.transform import Rotation as R
 from tqdm import tqdm
 import open3d as o3d
 
 from missing_kit.io import create_colmap_database, read_colmap_model, load_mesh, load_trans
 from missing_kit.math.transform import matrix_from_r_t, apply_matrix, matrix_rotate_axis_angle
+from missing_kit.math.fitting import fit_cylinder
 from missing_kit.mesh_process import simplify_mesh, transform_mesh
 from missing_kit.render import soft_render
 from missing_kit.shell import colmap
@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
     turn_table_points = load_mesh(TURNTABLE_FILE_PATH)
     turn_table_points = simplify_mesh(turn_table_points)
-    w_fit, C_fit, r_fit, fit_err = fit(turn_table_points)
+    w_fit, C_fit, r_fit, fit_err = fit_cylinder(turn_table_points)
 
     cam_poses.append(C_fit)
     cam_poses.append(C_fit * r_fit + w_fit)

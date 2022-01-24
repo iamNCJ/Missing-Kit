@@ -4,29 +4,11 @@ from scipy.spatial.transform import Rotation as R
 from tqdm import tqdm
 import open3d as o3d
 
-from missing_kit.io import create_colmap_database, read_colmap_model, load_mesh, load_trans
+from missing_kit.io import read_colmap_model, load_mesh, load_trans
 from missing_kit.math.transform import matrix_from_r_t, apply_matrix, matrix_rotate_axis_angle
-from missing_kit.math.fitting import fit_cylinder, reg_rigid_3d
+from missing_kit.math.fitting import fit_cylinder
 from missing_kit.mesh_process import simplify_mesh, transform_mesh
 from missing_kit.render import soft_render
-from missing_kit.shell import colmap
-
-
-def get_poisson_mesh(base_path, database_name, image_path, camera_params, output_poisson):
-    database_name = f'{base_path}/{database_name}'
-    sparse_model_path = f'{base_path}/sparse'
-    dense_model_path = f'{base_path}/dense'
-
-    create_colmap_database(database_name)
-    colmap.feature_extractor(database_name, image_path, camera_params)
-    colmap.exhaustive_matcher(database_name)
-    colmap.reconstruction_mapper(database_name, image_path, sparse_model_path)
-    colmap.bundle_adjustment(f'{sparse_model_path}/0')
-    colmap.image_undistortion(image_path, f'{sparse_model_path}/0', dense_model_path)
-    colmap.dense_model_stereo(dense_model_path)
-    colmap.dense_model_fusion(dense_model_path, f'{dense_model_path}/fused.ply')
-    colmap.poisson_mesher(f'{dense_model_path}/fused.ply', output_poisson)
-
 
 if __name__ == '__main__':
     OBJECT_NAME = 'egypt_cat'
@@ -42,9 +24,9 @@ if __name__ == '__main__':
     OBJECT_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/object.ply'
     TURNTABLE_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/turntable.ply'
     ALN_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/alignment.aln'
-    DENSE_MODEL = f'{AUTO_MASK_BASE_PATH}/sparse/0'
+    SPARSE_MODEL = f'{AUTO_MASK_BASE_PATH}/sparse/0'
 
-    cameras, images, points = read_colmap_model(DENSE_MODEL)
+    cameras, images, points = read_colmap_model(SPARSE_MODEL)
     cam_poses = []
     M_cam_init = None
     for image in images.values():

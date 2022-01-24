@@ -44,6 +44,16 @@ def reconstruction_mapper(database_file, image_path, output_path):
     :param image_path:
     :param output_path:
     """
+    print('colmap mapper '
+          f'--database_path {database_file} '
+          f'--image_path {image_path} '
+          f'--output_path {output_path} '
+          '--Mapper.multiple_models 0 '
+          '--Mapper.tri_ignore_two_view_tracks 0 '
+          '--Mapper.ba_refine_focal_length 0 '
+          '--Mapper.ba_refine_principal_point 0 '
+          '--Mapper.ba_refine_extra_params 0'
+          '--Mapper.ba_global_use_pba 0')
     stdout, stderr, exit_code = sh('colmap mapper '
                                    f'--database_path {database_file} '
                                    f'--image_path {image_path} '

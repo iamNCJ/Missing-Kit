@@ -54,9 +54,10 @@ def reconstruction_mapper(database_file, image_path, output_path):
                                    '--Mapper.ba_refine_principal_point 0 '
                                    '--Mapper.ba_refine_extra_params 0'
                                    '--Mapper.ba_global_use_pba 0')
+
+    print(stdout)
+    print(stderr)
     if exit_code != 0:
-        print(stdout)
-        print(stderr)
         raise RuntimeError('COLMAP Mapper run failed!')
 
 

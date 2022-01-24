@@ -28,10 +28,11 @@ def create_shell_process(command: str) -> Generator[IO[bytes], None, None]:
         raise ChildProcessError(process.returncode)
 
 
-def sh(command: str) -> Tuple[str, int]:
+def sh(command: str, echo: bool = True) -> Tuple[str, int]:
     """
     Launch shell command
     :param command: shell command in string
+    :param echo: enable stdout echo
     :return: stdout + stderr, return code
     """
     stdout_buffer = ''
@@ -43,7 +44,8 @@ def sh(command: str) -> Tuple[str, int]:
                 for text in iter(buff.read1, b""):  # type: ignore
                     text = decoder.decode(text)
                     stdout_buffer += text
-                    print(text, end='')
+                    if echo:
+                        print(text, end='')
                 decoder.decode(b'', final=True)
     except ChildProcessError as e:
         ret_code = e

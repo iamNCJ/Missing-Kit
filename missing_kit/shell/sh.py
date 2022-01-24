@@ -1,7 +1,7 @@
 """
 Inspired by `zxpy`(https://github.com/tusharsadhwani/zxpy), but no need to use `zxpy` to launch anymore
 """
-
+import os
 import subprocess
 from typing import Tuple
 
@@ -29,6 +29,11 @@ def sh(command: str) -> Tuple[str, str, int]:
         stderr_text.decode(),
         process.returncode,
     )
+
+
+def mkdir(path):
+    if not os.path.exists(path):
+        os.mkdir(path)
 
 
 if __name__ == '__main__':

@@ -107,4 +107,5 @@ if __name__ == '__main__':
         img = (soft_render(trans_points, focal_lengths, principal_point, image_dimensions) * 255).astype(np.uint8)
         img = cv2.dilate(img, kernel=np.ones((10, 10), 'uint8'))
         img = cv2.erode(img, kernel=np.ones((10, 10), 'uint8'))
+        img = cv2.dilate(img, kernel=np.ones((10, 10), 'uint8'))
         cv2.imwrite(f'{BASE_PATH}/{i}/mask_obj_only2.png', img)

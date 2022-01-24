@@ -19,7 +19,7 @@ def get_poisson_mesh(base_path, database_name, image_path, camera_params, output
 
 
 if __name__ == '__main__':
-    BASE_PATH = '/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_lambda_comp/egypt'
+    BASE_PATH = '/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_main_results/conch'
     DB_NAME = 'database.db'
     FULLON_IMAGE_PATH = f'{BASE_PATH}/fullon'
 

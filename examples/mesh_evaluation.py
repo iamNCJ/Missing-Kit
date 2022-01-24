@@ -7,8 +7,7 @@ def main_pipeline(mesh_file_source, mesh_file_target, aln_file, output_mesh_file
     # stage 1, load meshes and transform to initial location
     source_points = load_mesh(mesh_file_source)
     target_points = load_mesh(mesh_file_target)
-    trans_1, trans_2 = load_trans(aln_file)
-    trans = trans_1 @ trans_2  # just to eliminate unit matrix
+    trans = load_trans(aln_file)
     transformed_source_points = transform_mesh(source_points, trans)
 
     # stage 2, simplify mesh_process

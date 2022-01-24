@@ -12,4 +12,4 @@ def load_trans(filename):
         trans_1 = np.fromstring(''.join(res[3:7]), dtype=np.float32, sep=' ').reshape((4, 4))
         trans_2 = np.fromstring(''.join(res[9:13]), dtype=np.float32, sep=' ').reshape((4, 4))
 
-    return trans_1, trans_2
+    return trans_1 @ trans_2

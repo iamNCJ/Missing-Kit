@@ -7,8 +7,11 @@ def get_poisson_mesh(database_name, undistorted_image_path, camera_params, spars
     colmap.feature_extractor(database_name, undistorted_image_path, camera_params)
     colmap.exhaustive_matcher(database_name)
     colmap.reconstruction_mapper(database_name, undistorted_image_path, sparse_model_path)
-    colmap.bundle_adjustment(sparse_model_path + '/0')
-    colmap.image_undistortion(undistorted_image_path, sparse_model_path + '/0', dense_model_path)
+    colmap.bundle_adjustment(f'{sparse_model_path}/0')
+    colmap.image_undistortion(undistorted_image_path, f'{sparse_model_path}/0', dense_model_path)
+    colmap.dense_model_stereo(dense_model_path)
+    colmap.dense_model_fusion(dense_model_path, f'{dense_model_path}/fused.ply')
+    colmap.poisson_mesher(f'{dense_model_path}/fused.ply', f'{dense_model_path}/meshed_poisson.ply')
 
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
 from missing_kit.shell import sh, mkdir
 
 
+# TODO: finish docstrings
 def feature_extractor(database_file: str, image_path: str, camera_params: str):
     """
     Wrapper of COLMAP Feature Extractor
@@ -93,3 +94,46 @@ def image_undistortion(image_path, model_path, output_path):
     if exit_code != 0:
         print(output)
         raise RuntimeError('COLMAP Image Undistortor run failed!')
+
+
+def dense_model_stereo(model_path):
+    """
+    Wrapper of COLMAP Dense 3D Stereo Reconstruction
+    :param: model_path
+    """
+    output, exit_code = sh('colmap patch_match_stereo '
+                           f'--workspace_path {model_path}')
+
+    if exit_code != 0:
+        print(output)
+        raise RuntimeError('COLMAP Dense 3D Stereo run failed!')
+
+
+def dense_model_fusion(model_path, output_path):
+    """
+    Wrapper of COLMAP Fusion
+    :param: model_path
+    """
+    output, exit_code = sh('colmap stereo_fusion '
+                           f'--workspace_path {model_path} '
+                           f'--output_path {output_path}')
+
+    if exit_code != 0:
+        print(output)
+        raise RuntimeError('COLMAP Fusion run failed!')
+
+
+def poisson_mesher(input_file, output_file, trim: float = 5.):
+    """
+    Wrapper of COLMAP Poisson Surface Reconstruction
+    :param: input_file
+    :param: output_file
+    """
+    output, exit_code = sh('colmap poisson_mesher '
+                           f'--input_path {input_file} '
+                           f'--output_path {output_file} '
+                           f'--PoissonMeshing.trim {trim:.1f}')
+
+    if exit_code != 0:
+        print(output)
+        raise RuntimeError('COLMAP Poisson Surface Reconstruction run failed!')

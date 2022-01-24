@@ -15,9 +15,10 @@ def feature_extractor(database_file: str, image_path: str, camera_params: str):
                                    '--ImageReader.camera_model OPENCV '
                                    '--ImageReader.single_camera 1 '
                                    f'--ImageReader.camera_params {camera_params}')
+
+    print(stdout)
+    print(stderr)
     if exit_code != 0:
-        print(stdout)
-        print(stderr)
         raise RuntimeError('COLMAP Feature Extractor run failed!')
 
 
@@ -29,5 +30,8 @@ def exhaustive_matcher(database_file: str):
     """
     stdout, stderr, exit_code = sh('colmap feature_extractor '
                                    f'--database_path {database_file}')
+
+    print(stdout)
+    print(stderr)
     if exit_code != 0:
         raise RuntimeError('COLMAP Exhaustive Matcher run failed!')

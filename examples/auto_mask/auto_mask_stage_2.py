@@ -31,7 +31,7 @@ def get_poisson_mesh(base_path, database_name, image_path, camera_params, output
 if __name__ == '__main__':
     OBJECT_NAME = 'big_white'
     BASE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_main_results/{OBJECT_NAME}'
-    GROUNDTRUTH_FILE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/gts/{OBJECT_NAME}.ply'
+    # GROUNDTRUTH_FILE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/gts/{OBJECT_NAME}.ply'
     CAM_PARAMS = [2373.046104729776, 2375.5106693944517, 668.8785376738697, 550.609404815664]
     W, H = 1332, 1152
 
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     PICKED_IMAGE_PATH = f'{AUTO_MASK_BASE_PATH}/selected_views'
     OBJECT_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/object.ply'
     TURNTABLE_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/turntable.ply'
-    ALN_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/alignment.aln'
+    # ALN_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/alignment.aln'
     DENSE_MODEL = f'{AUTO_MASK_BASE_PATH}/sparse/0'
 
     cameras, images, points = read_colmap_model(DENSE_MODEL)
@@ -90,12 +90,12 @@ if __name__ == '__main__':
     #         tx, ty, tz = M_cam_new[0:3, 3]
     #         f.write(f'{id_map[f"{(360 - j) % 360}.png"]} {qw} {qx} {qy} {qz} {tx} {ty} {tz} 1 {(360 - j) % 360}.png\n\n')
 
-    gt_points = load_mesh(GROUNDTRUTH_FILE_PATH)
-    trans = load_trans(ALN_FILE_PATH)
-    gt_points = transform_mesh(gt_points, trans)
+    # gt_points = load_mesh(GROUNDTRUTH_FILE_PATH)
+    # trans = load_trans(ALN_FILE_PATH)
+    # gt_points = transform_mesh(gt_points, trans)
     obj_points = load_mesh(OBJECT_FILE_PATH)
-    finetuned_trans = reg_rigid_3d(simplify_mesh(obj_points), simplify_mesh(gt_points))
-    gt_points = transform_mesh(gt_points, finetuned_trans)
+    # finetuned_trans = reg_rigid_3d(simplify_mesh(obj_points), simplify_mesh(gt_points))
+    # gt_points = transform_mesh(gt_points, finetuned_trans)
     image_dimensions = np.array((H, W), dtype=np.float64)
     focal_lengths = np.array((CAM_PARAMS[0], CAM_PARAMS[1]), dtype=np.float64)
     principal_point = np.array((CAM_PARAMS[2], CAM_PARAMS[3]), dtype=np.float64)
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     for i in tqdm(range(0, 360)):
         M_Rotate_inv = np.linalg.inv(matrix_rotate_axis_angle(w_fit, C_fit, i * np.pi / 180.))
         M_cam_new = M_cam_init @ M_Rotate_inv
-        trans_points = apply_matrix(M_cam_new, gt_points)
+        trans_points = apply_matrix(M_cam_new, obj_points)
         img = (soft_render(trans_points, focal_lengths, principal_point, image_dimensions) * 255).astype(np.uint8)
         img = cv2.dilate(img, kernel=np.ones((10, 10), 'uint8'))
         img = cv2.erode(img, kernel=np.ones((10, 10), 'uint8'))

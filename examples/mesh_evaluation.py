@@ -11,7 +11,8 @@ if __name__ == '__main__':
         'undistort_feature_dift_rgb_2',
         'undistort_feature_lambda_1e-2_rgb_2',
         'undistort_feature_test_mask_2',
-        'undistort_feature_test_mask_4points_2'
+        'undistort_feature_test_mask_4points_2',
+        'casmvs_res'
     ]
     PLY_FILE_NAME = 'fused_remove_bottom.ply'
     ALN_FILE_NAME = 'aln_gt.aln'
@@ -42,8 +43,21 @@ if __name__ == '__main__':
         binary_path=ETH3D_PATH,
         work_dir=RES_PATH
     )
-    res = eth3d.compare_mesh(recon_mesh, transformed_gt_points)
-    print(res.tolerances)
-    print(res.completenesses)
-    print(res.accuracies)
-    print(res.f1_scores)
+
+    tols = []
+    completenesses = []
+    accs = []
+    f1s = []
+    for MODEL in MODEL_LIST:
+        recon_mesh = load_mesh(rf'{BASE_DIR}\{MODEL}\{PLY_FILE_NAME}')
+        res = eth3d.compare_mesh(recon_mesh, transformed_gt_points)
+        tols = res.tolerances
+        completenesses.append(res.completenesses)
+        accs.append(res.accuracies)
+        f1s.append(res.f1_scores)
+
+    for i in range(len(tols)):
+        with open(rf"{RES_PATH}\tolerance_{tols[i]}.csv", 'w') as f:
+            f.write(f'model_name, Completenesses, Accuracies, F1, tol={tols[i]}\n')
+            for j in range(len(completenesses)):
+                f.write(f'{MODEL_LIST[j]}, {completenesses[j][i]}, {accs[j][i]}, {f1s[j][i]},\n')

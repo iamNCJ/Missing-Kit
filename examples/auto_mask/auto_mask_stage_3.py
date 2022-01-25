@@ -8,13 +8,13 @@ from missing_kit.math.fitting import fit_cylinder
 from scipy.spatial.transform import Rotation as R
 
 if __name__ == '__main__':
-    OBJECT_NAME = 'egypt'
-    BASE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_lambda_comp/{OBJECT_NAME}'
+    OBJECT_NAME = 'egypt_cat'
+    BASE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_main_results/{OBJECT_NAME}'
     CAMERA_PARAMS = '2373.046104729776,2375.5106693944517,668.8785376738697,550.609404815664,0.0,0.0,0.0,0.0'
 
     DB_NAME = 'database.db'
-    NEW_IMAGE_PATH = f'{BASE_PATH}/test_mask'
-    SFM_PATH = f'{BASE_PATH}/sfm_test'
+    NEW_IMAGE_PATH = f'{BASE_PATH}/fullon'
+    SFM_PATH = f'{BASE_PATH}/sfm'
     DB_PATH = f'{SFM_PATH}/{DB_NAME}'
 
     AUTO_MASK_BASE_PATH = f'{BASE_PATH}/auto_mask'

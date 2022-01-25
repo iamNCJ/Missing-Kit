@@ -20,10 +20,10 @@ if __name__ == '__main__':
     AUTO_MASK_BASE_PATH = f'{BASE_PATH}/auto_mask'
     SPARSE_MODEL = f'{AUTO_MASK_BASE_PATH}/sparse/0'
 
-    mkdir(SFM_PATH)
-    create_colmap_database(DB_PATH)
-    colmap.feature_extractor(DB_PATH, NEW_IMAGE_PATH, CAMERA_PARAMS)
-    colmap.exhaustive_matcher(DB_PATH)
+    # mkdir(SFM_PATH)
+    # create_colmap_database(DB_PATH)
+    # colmap.feature_extractor(DB_PATH, NEW_IMAGE_PATH, CAMERA_PARAMS)
+    # colmap.exhaustive_matcher(DB_PATH)
 
     images = get_images_from_colmap_db(DB_PATH)
     id_map = {}
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     cameras, images, points = read_colmap_model(SPARSE_MODEL)
     M_cam_init = None
-    image = images.values()[0]
+    image = images[1]
     qw, qx, qy, qz = image.qvec
     r = R.from_quat([qx, qy, qz, qw])
     R_mat = r.as_matrix().reshape((3, 3))

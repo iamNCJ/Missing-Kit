@@ -5,8 +5,8 @@ from tqdm import tqdm
 import open3d as o3d
 
 from missing_kit.io import read_colmap_model, load_mesh, load_trans
-from missing_kit.math.transform import matrix_from_r_t, apply_matrix, matrix_rotate_axis_angle
-from missing_kit.math.fitting import fit_cylinder
+from missing_kit.numerics.transform import matrix_from_r_t, apply_matrix, matrix_rotate_axis_angle
+from missing_kit.numerics.fitting import fit_cylinder
 from missing_kit.mesh_process import simplify_mesh, transform_mesh
 from missing_kit.render import soft_render
 

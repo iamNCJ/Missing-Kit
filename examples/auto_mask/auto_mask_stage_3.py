@@ -1,10 +1,10 @@
 import numpy as np
 
 from missing_kit.io import create_colmap_database, get_images_from_colmap_db, read_colmap_model, load_mesh
-from missing_kit.math.transform import matrix_from_r_t, apply_matrix, matrix_rotate_axis_angle
+from missing_kit.numerics.transform import matrix_from_r_t, apply_matrix, matrix_rotate_axis_angle
 from missing_kit.mesh_process import simplify_mesh
 from missing_kit.shell import colmap, mkdir
-from missing_kit.math.fitting import fit_cylinder
+from missing_kit.numerics.fitting import fit_cylinder
 from scipy.spatial.transform import Rotation as R
 
 if __name__ == '__main__':

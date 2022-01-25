@@ -1,4 +1,4 @@
-from missing_kit.math.fitting.cpd import reg_rigid_3d
+from missing_kit.numerics.fitting.cpd import reg_rigid_3d
 from missing_kit.io import load_mesh, save_mesh, load_trans
 from missing_kit.mesh_process import transform_mesh, simplify_mesh
 

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from missing_kit.io import load_mesh
-from missing_kit.math.transform import apply_matrix
+from missing_kit.numerics.transform import apply_matrix
 from missing_kit.render import soft_render
 
 if __name__ == '__main__':

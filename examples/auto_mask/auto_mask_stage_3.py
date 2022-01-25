@@ -8,10 +8,10 @@ from missing_kit.math.fitting import fit_cylinder
 from scipy.spatial.transform import Rotation as R
 
 if __name__ == '__main__':
-    for OBJECT_NAME in ['train', 'conch', 'big_white', 'egypt']:
+    for OBJECT_NAME in ['conch', 'big_white', 'egypt']:
         BASE_PATH = f'/workspace/data/bigbigbig/LIGHT_FIELD_freshmeat/1_24_main_results/{OBJECT_NAME}'
         CAMERA_PARAMS = '2373.046104729776,2375.5106693944517,668.8785376738697,550.609404815664,0.0,0.0,0.0,0.0'
-    
+
         DB_NAME = 'database.db'
         NEW_IMAGE_PATH = f'{BASE_PATH}/fullon'
         SFM_PATH = f'{BASE_PATH}/sfm'
@@ -33,15 +33,12 @@ if __name__ == '__main__':
             id_map[filename] = image_id
 
         cameras, images, points = read_colmap_model(SPARSE_MODEL)
-        M_cam_init = None
         image = images[1]
         qw, qx, qy, qz = image.qvec
         r = R.from_quat([qx, qy, qz, qw])
         R_mat = r.as_matrix().reshape((3, 3))
         T_vec = image.tvec
         M_cam = matrix_from_r_t(R_mat, T_vec)
-        if image.name == '0.png':
-            M_cam_init = M_cam
         M_cam_inv = np.linalg.inv(M_cam)
         cam_pos = apply_matrix(M_cam_inv, np.zeros((1, 3)))
 
@@ -59,7 +56,7 @@ if __name__ == '__main__':
         with open(f'{MANUAL_MODEL_PATH}/images.txt', 'w') as f:
             for j in range(0, 360):
                 M_Rotate_inv = np.linalg.inv(matrix_rotate_axis_angle(w_fit, C_fit, j * np.pi / 180.))
-                M_cam_new = M_cam_init @ M_Rotate_inv
+                M_cam_new = M_cam @ M_Rotate_inv
                 M_cam_new_inv = np.linalg.inv(M_cam_new)
                 cam_pos = apply_matrix(M_cam_new_inv, np.zeros((1, 3)))
                 r = R.from_matrix(M_cam_new[0:3, 0:3])

@@ -53,7 +53,10 @@ if __name__ == '__main__':
     if np.dot(cam_pos.reshape((3,)) - C_fit, w_fit) > 0:
         w_fit *= -1
 
-    with open(f'{SFM_PATH}/manual/images.txt', 'w') as f:
+    MANUAL_MODEL_PATH = f'{SFM_PATH}/manual'
+    mkdir(MANUAL_MODEL_PATH)
+
+    with open(f'{MANUAL_MODEL_PATH}/images.txt', 'w') as f:
         for j in range(0, 360):
             M_Rotate_inv = np.linalg.inv(matrix_rotate_axis_angle(w_fit, C_fit, j * np.pi / 180.))
             M_cam_new = M_cam_init @ M_Rotate_inv
@@ -64,14 +67,14 @@ if __name__ == '__main__':
             tx, ty, tz = M_cam_new[0:3, 3]
             f.write(f'{id_map[f"{j}.png"]} {qw} {qx} {qy} {qz} {tx} {ty} {tz} 1 {j}.png\n\n')
 
-    with open(f'{SFM_PATH}/manual/cameras.txt', 'w') as f:
+    with open(f'{MANUAL_MODEL_PATH}/cameras.txt', 'w') as f:
         f.write("""# Camera list with one line of data per camera:
 #   CAMERA_ID, MODEL, WIDTH, HEIGHT, PARAMS[]
 # Number of cameras: 1
 1 OPENCV 1332 1152 2373.05 2375.51 668.879 550.609 0 0 0 0
 """)
 
-    with open(f'{SFM_PATH}/manual/cameras.txt', 'w') as f:
+    with open(f'{MANUAL_MODEL_PATH}/points3D.txt', 'w') as f:
         f.write('')
 
     mkdir(f'{SFM_PATH}/triangulate')

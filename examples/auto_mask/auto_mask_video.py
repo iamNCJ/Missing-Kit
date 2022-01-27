@@ -25,7 +25,7 @@ if __name__ == '__main__':
     TURNTABLE_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/turntable.ply'
     # ALN_FILE_PATH = f'{AUTO_MASK_BASE_PATH}/alignment.aln'
     SPARSE_MODEL = f'{AUTO_MASK_BASE_PATH}/sparse/0'
-    POISSON_MODEL_PATH = f'{BASE_PATH}/undistort_feature_lambda_1e-2_rgb_2/fused_remove_bottom.ply'
+    POISSON_MODEL_PATH = f'{BASE_PATH}/scores_new/gt.ply'
 
     cameras, images, points = read_colmap_model(SPARSE_MODEL)
     cam_poses = []
@@ -93,4 +93,4 @@ if __name__ == '__main__':
         img = cv2.erode(img, kernel=np.ones((10, 10), 'uint8'))
         img = cv2.erode(img, kernel=np.ones((10, 10), 'uint8'))
         img = cv2.dilate(img, kernel=np.ones((10, 10), 'uint8'))
-        cv2.imwrite(f'{BASE_PATH}/{i}/mask_obj_only2_video_new.png', img)
+        cv2.imwrite(f'{BASE_PATH}/{i}/mask_obj_only2_video_new_gt.png', img)

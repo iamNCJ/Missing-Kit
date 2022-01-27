@@ -93,4 +93,4 @@ if __name__ == '__main__':
         img = cv2.erode(img, kernel=np.ones((10, 10), 'uint8'))
         img = cv2.erode(img, kernel=np.ones((10, 10), 'uint8'))
         img = cv2.dilate(img, kernel=np.ones((10, 10), 'uint8'))
-        cv2.imwrite(f'{BASE_PATH}/{i}/mask_obj_only2_video.png', img)
+        cv2.imwrite(f'{BASE_PATH}/{i}/mask_obj_only2_video_new.png', img)

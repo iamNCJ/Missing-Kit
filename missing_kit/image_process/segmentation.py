@@ -32,7 +32,7 @@ def infer_u2net(input_image: np.ndarray) -> Image:
     :param input_image: [1, 3, 320, 320], NCHW
     :return: mask in PIL.Image grayscale format
     """
-    sess = rt.InferenceSession('./u2net.quant.onnx')
+    sess = rt.InferenceSession('./missing_kit/image_process/u2net.quant.onnx', providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
     input_name = sess.get_inputs()[0].name
     output_name = sess.get_outputs()[0].name
     pred_onx = sess.run([output_name], {input_name: input_image.astype(np.float32)})[0]

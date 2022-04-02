@@ -118,3 +118,11 @@ dmypy.json
 
 # PyCharm
 .idea/
+
+# model
+*.onnx
+
+# data
+*.jpeg
+*.jpg
+*.png

@@ -6,7 +6,9 @@ from . import fitting
 
 
 def show_G_distribution(data):
-    '''Show the distribution of the G function.'''
+    """
+    Show the distribution of the G function.
+    """
     Xs, t = fitting.preprocess_data(data)
 
     Theta, Phi = np.meshgrid(np.linspace(0, np.pi, 50), np.linspace(0, 2 * np.pi, 50))
@@ -23,19 +25,18 @@ def show_G_distribution(data):
 
 
 def show_fit(w_fit, C_fit, r_fit, Xs):
-    '''Plot the fitting given the fitted axis direction, the fitted
+    """
+    Plot the fitting given the fitted axis direction, the fitted
     center, the fitted radius and the data points.
-    '''
+    """
 
     fig = plt.figure()
     ax = fig.gca(projection='3d')
 
     # Plot the data points
-
     ax.scatter([X[0] for X in Xs], [X[1] for X in Xs], [X[2] for X in Xs])
 
     # Get the transformation matrix
-
     theta = np.arccos(np.dot(w_fit, np.array([0, 0, 1])))
     phi = np.arctan2(w_fit[1], w_fit[0])
 
@@ -43,7 +44,6 @@ def show_fit(w_fit, C_fit, r_fit, Xs):
                rotation_matrix_from_axis_and_angle(np.array([0, 1, 0]), theta))
 
     # Plot the cylinder surface
-
     delta = np.linspace(-np.pi, np.pi, 20)
     z = np.linspace(-10, 10, 20)
 
@@ -62,7 +62,6 @@ def show_fit(w_fit, C_fit, r_fit, Xs):
     ax.plot_surface(X, Y, Z, alpha=0.2)
 
     # Plot the center and direction
-
     ax.quiver(C_fit[0], C_fit[1], C_fit[2],
               r_fit * w_fit[0], r_fit * w_fit[1], r_fit * w_fit[2], color='red')
 

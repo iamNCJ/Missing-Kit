@@ -1,5 +1,5 @@
 # Missing-Kit
- The missing tool kit for CV&CG researchers
+ The missing tool kit for MVS researchers
 
 ## MVS Main Pipeline
  - Image pre-process

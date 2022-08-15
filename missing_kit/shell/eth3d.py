@@ -56,7 +56,7 @@ class ETH3DRunner:
 
         if exit_code != 0:
             print(output)
-            raise RuntimeError('COLMAP Poisson Surface Reconstruction run failed!')
+            raise RuntimeError('ETH3DMultiViewEvaluation run failed!')
 
         output = output.split('\n')
         for i in range(len(output)):
